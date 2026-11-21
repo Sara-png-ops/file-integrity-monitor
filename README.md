@@ -89,6 +89,8 @@ A file that cannot be read is always reported as `UNREADABLE`, never as `DELETED
 4. In the test folder, edit a file, delete a file and add a new file.
 5. Click **Check Integrity**. The table lists every file with its status, and the summary line shows the count for each status.
 
+The screenshots demonstrate the application using a test folder containing sample files created for demonstration purposes.
+
 ## Known Limitations
 
 - **On-demand only.** There is no real-time monitoring, scheduling or alerting outside the application window.
@@ -118,17 +120,25 @@ The tests cover SHA-256 hashing, baseline creation and loading, detection of mod
 
 ![Main Application Window](screenshots/01-main-window.png)
 
+*The application's main interface.*
+
 ### 2. Baseline Created
 
 ![Baseline Created](screenshots/02-baseline-created.png)
+
+*The initial file baseline has been successfully created.*
 
 ### 3. Integrity Check Results
 
 ![Integrity Check Results](screenshots/03-results-changes.png)
 
+*Modified, deleted and new files detected after changes to the test folder.*
+
 ### 4. Unreadable File Detection
 
 ![Unreadable File Detection](screenshots/04-results-unreadable.png)
+
+*A file that could not be read is reported as UNREADABLE, not as deleted.*
 
 ## Project Structure
 
