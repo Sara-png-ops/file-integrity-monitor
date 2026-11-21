@@ -1,0 +1,18 @@
+# Generated baselines (machine-specific, may list private file paths)
+fim_baselines/
+
+# Python
+__pycache__/
+*.pyc
+*.tmp
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Editor / OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
