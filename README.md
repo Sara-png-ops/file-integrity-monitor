@@ -2,7 +2,7 @@
 
 A Python desktop application that detects changes to files in a chosen folder by comparing their SHA-256 hashes against a previously saved baseline.
 
-> **Important:** this tool performs **on-demand integrity verification**. It checks a folder when you click **Check Integrity**; it does not watch files in real time. It detects that files **changed**, but it **cannot determine whether a change was authorized**.
+> **Important:** This tool performs **on-demand integrity verification**. It checks a folder when you click **Check Integrity**; it does not watch files in real time. It detects that files **changed**, but it **cannot determine whether a change was authorized**.
 
 ## Overview
 
@@ -10,8 +10,8 @@ File integrity monitoring is a standard security control: record a trusted "know
 
 This project is an educational implementation of that idea:
 
-1. **Create a baseline**: the app hashes every readable file in a folder with SHA-256 and saves the results as JSON.
-2. **Check integrity**: the app hashes the folder again and compares the result with the baseline.
+1. **Create a baseline:** The app hashes every readable file in a folder with SHA-256 and saves the results as JSON.
+2. **Check integrity:** The app hashes the folder again and compares the result with the baseline.
 3. Each file is reported as `MODIFIED`, `DELETED`, `NEW`, `UNCHANGED` or `UNREADABLE`.
 
 ## Features
@@ -29,17 +29,29 @@ This project is an educational implementation of that idea:
 - Symbolic links and non-regular files are skipped
 - The `fim_baselines` folder is excluded from scans
 
-## Technologies used
+## Technologies Used
 
 - Python 3.8 or newer
 - Standard library only: `hashlib`, `json`, `os`, `pathlib`, `re`, `datetime`, `tkinter`, `unittest`
 - No third-party packages
 
-## Installation and running
+## Installation and Running
+
+Clone the repository:
 
 ```bash
 git clone https://github.com/Sara-png-ops/file-integrity-monitor.git
+```
+
+Navigate into the project folder:
+
+```bash
 cd file-integrity-monitor
+```
+
+Run the application:
+
+```bash
 python main.py
 ```
 
@@ -53,7 +65,7 @@ sudo apt install python3-tk
 
 There is no `requirements.txt` because the project has no external dependencies.
 
-## How the baseline comparison works
+## How the Baseline Comparison Works
 
 1. **Scan.** The app walks the selected folder. For each regular file it computes the SHA-256 hash of the file's contents and records it against the file's path relative to the selected folder. Files or folders that cannot be read are recorded in a separate unreadable list.
 2. **Baseline.** The relative paths and hashes are saved to `fim_baselines/<id>.json`, together with the folder path, a creation time, and the unreadable list. `<id>` is a SHA-256 hash of the folder's full path, so each folder has its own baseline.
@@ -69,7 +81,7 @@ There is no `requirements.txt` because the project has no external dependencies.
 
 A file that cannot be read is always reported as `UNREADABLE`, never as `DELETED` or `NEW`, because its real state is unknown. A hash is a fingerprint of the file's content: if even one byte changes, the SHA-256 value is completely different.
 
-## How to use
+## How to Use
 
 1. Create a **separate test folder** with a few sample files.
 2. Run `python main.py` and click **Select Folder**.
@@ -77,7 +89,7 @@ A file that cannot be read is always reported as `UNREADABLE`, never as `DELETED
 4. In the test folder, edit a file, delete a file and add a new file.
 5. Click **Check Integrity**. The table lists every file with its status, and the summary line shows the count for each status.
 
-## Known limitations
+## Known Limitations
 
 - **On-demand only.** There is no real-time monitoring, scheduling or alerting outside the application window.
 - **Detects changes, not intent.** The tool cannot tell whether a change was authorized, legitimate or malicious.
@@ -87,7 +99,7 @@ A file that cannot be read is always reported as `UNREADABLE`, never as `DELETED
 - **Symbolic links are skipped**, so replacing a file with a link is not detected.
 - **Unreadable files cannot be verified.** They are reported, but nothing is known about their content.
 - **Files that change while a scan is running** may produce inconsistent results.
-- **Large folders:** scanning runs on the GUI thread, so the window may stop responding until the scan finishes.
+- **Large folders:** Scanning runs on the GUI thread, so the window may stop responding until the scan finishes.
 - **Not a replacement for production tools** such as AIDE, Tripwire or OSSEC/Wazuh.
 
 ## Testing
@@ -102,33 +114,39 @@ The tests cover SHA-256 hashing, baseline creation and loading, detection of mod
 
 ## Screenshots
 
-<!-- Save images in a `screenshots/` folder, then replace each placeholder with:
-     ![Description](screenshots/file-name.png) -->
+### 1. Main Application Window
 
-**Main window**
+![Main Application Window](screenshots/01-main-window.png)
 
-*Screenshot to be added*
+### 2. Baseline Created
 
-**Baseline created**
+![Baseline Created](screenshots/02-baseline-created.png)
 
-*Screenshot to be added*
+### 3. Integrity Check Results
 
-**Integrity check results (modified, deleted, new, unchanged and unreadable files)**
+![Integrity Check Results](screenshots/03-results-changes.png)
 
-*Screenshot to be added*
+### 4. Unreadable File Detection
 
-## Project structure
+![Unreadable File Detection](screenshots/04-results-unreadable.png)
 
-```
+## Project Structure
+
+```text
 file-integrity-monitor/
-├── main.py          # Application: core logic and Tkinter GUI
-├── test_fim.py      # Automated tests for the core logic
+├── main.py
+├── test_fim.py
 ├── README.md
 ├── .gitignore
+├── screenshots/
+│   ├── 01-main-window.png
+│   ├── 02-baseline-created.png
+│   ├── 03-results-changes.png
+│   └── 04-results-unreadable.png
 └── fim_baselines/   # Created automatically; ignored by Git
 ```
 
-## Possible future improvements
+## Possible Future Improvements
 
 - Protect the baseline (for example with a keyed HMAC)
 - Record file permissions and sizes
